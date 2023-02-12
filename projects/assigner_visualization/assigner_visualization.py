@@ -17,7 +17,8 @@ from numpy import random
 from mmyolo.registry import DATASETS, MODELS
 from mmyolo.utils import register_all_modules
 from projects.assigner_visualization.dense_heads import (RTMHeadAssigner,
-                                                         YOLOv5HeadAssigner)
+                                                         YOLOv5HeadAssigner,
+                                                         YOLOv8HeadAssigner)
 from projects.assigner_visualization.visualization import \
     YOLOAssignerVisualizer
 
@@ -93,12 +94,16 @@ def main():
             'if you use dynamic_assignment methods such as yolov7 or '
             'rtmdet assigner, please load the checkpoint.')
 
-    assert isinstance(model.bbox_head, (YOLOv5HeadAssigner, RTMHeadAssigner)),\
-        'Now, this script only support yolov5 and rtmdet, and ' \
+    assert isinstance(model.bbox_head, (YOLOv5HeadAssigner,
+                                        RTMHeadAssigner,
+                                        YOLOv8HeadAssigner)), \
+        'Now, this script only support yolov5, rtmdet and yolov8, and ' \
         'bbox_head must use ' \
-        '`YOLOv5HeadAssigner or RTMHeadAssigner`. Please use `' \
+        '`YOLOv5HeadAssigner or RTMHeadAssigner or YOLOv8HeadAssigner`. ' \
+        ' Please use `' \
         'yolov5_s-v61_syncbn_fast_8xb16-300e_coco_assignervisualization.py' \
         'or rtmdet_s_syncbn_fast_8xb32-300e_coco_assignervisualization.py' \
+        'or  yolov8_s_syncbn_fast_8xb16-500e_coco_assignervisualization.py'\
         """` as config file."""
     model.eval()
     model.to(args.device)
